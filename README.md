@@ -7,7 +7,7 @@ Supported variables:
 * `F` (the fields of current record)
 
 # Fruit examples
-These examples operate on `examples/indata.log` with this content:
+These examples operate on `examples/fruit_prices.txt` with this content:
 ```
 Banana 150
 Apple 10
@@ -18,7 +18,7 @@ Strawberries 30
 
 * Add a running line number to each line:
 ```console
-$ pawk -t 'print(NR, F[0])' examples/indata.log
+$ pawk -t 'print(NR, F[0])' examples/fruit_prices.txt
 1 Banana 150
 2 Apple 10
 3 Citrus 200
@@ -37,6 +37,6 @@ if END: print(f"Total: {s}")
 
 Supply the above script to pawk:
 ```console
-$ pawk -f examples/total_sum.py examples/indata.log
+$ pawk -f examples/total_sum.py examples/fruit_prices.txt
 Total: 420
 ```
