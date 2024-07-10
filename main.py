@@ -29,10 +29,12 @@ def intify(word):
 
 _locals: dict[Any, Any] = {}
 for i, line in enumerate(lines):
-    # Full line as f[0] and the rest of columns start from f[1]
-    f = [line, *(intify(w) for w in line.split())]
-
     _locals["BEGIN"] = i == 0
     _locals["END"]   = i == len(lines) - 1
+    _locals["NR"]    = i + 1
+
+    # Full line as f[0] and the rest of columns start from f[1]
+    f = [line, *(intify(w) for w in line.split())]
     _locals["F"] = f
+
     exec(program, {}, _locals)  # pylint: disable=exec-used
