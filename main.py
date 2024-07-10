@@ -10,15 +10,12 @@ parser = ArgumentParser(prog='Pawk', description='awk-like python tool')
 program_group = parser.add_mutually_exclusive_group(required=True)
 program_group.add_argument("-t", "--program-text")
 program_group.add_argument("-f", "--program-file")
-parser.add_argument("file")
+parser.add_argument("file", nargs="+")
 args = parser.parse_args()
 
 if (program := args.program_text) is None:
     with open(args.program_file, encoding="utf8") as program_file:
         program = program_file.read()
-
-with open(args.file, encoding="utf8") as infile:
-    lines = infile.read().splitlines()
 
 def intify(word):
     try:
@@ -26,15 +23,30 @@ def intify(word):
     except ValueError:
         return word
 
+_locals: dict[Any, Any] = {"BEGIN": True, "NR": 1}
 
-_locals: dict[Any, Any] = {}
-for i, line in enumerate(lines):
-    _locals["BEGIN"] = i == 0
-    _locals["END"]   = i == len(lines) - 1
-    _locals["NR"]    = i + 1
+for file_no, _file in enumerate(args.file):
+    last_file = file_no == len(args.file) - 1
+    with open(_file, encoding="utf8") as infile:
+        lines = infile.read().splitlines()
 
-    # Full line as f[0] and the rest of columns start from f[1]
-    f = [line, *(intify(w) for w in line.split())]
-    _locals["F"] = f
+    for line_no, line in enumerate(lines):
+        last_line = line_no == len(lines) - 1
+        _locals["END"] = last_file and last_line
+        _locals["FNR"] = line_no + 1
 
-    exec(program, {}, _locals)  # pylint: disable=exec-used
+        # Full line as f[0] and the rest of columns start from f[1]
+        f = [line, *(intify(w) for w in line.split())]
+        _locals["F"] = f
+
+        # Poor mans way of implementing "keywords" by catching NameError
+        try:
+            exec(program, {}, _locals)  # pylint: disable=exec-used
+        except NameError as e:
+            if "name 'NEXT' is not defined" in str(e):
+                pass
+            else:
+                raise
+
+        _locals["BEGIN"] = False
+        _locals["NR"]    += 1
