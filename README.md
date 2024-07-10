@@ -33,7 +33,7 @@ $ pawk -t 'print(NR, F[0])' examples/fruit_prices.txt
 * Calculate the sum of a specific column:
 With a program file like this:
 ```console
-$ cat examples/*.py
+$ cat examples/total_sum.py
 if BEGIN: s=0
 s+=F[2]
 if END: print(f"Total: {s}")
