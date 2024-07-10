@@ -18,12 +18,12 @@ Strawberries 30
 
 * Add a running line number to each line:
 ```console
-$ pawk -t 'print(NR, F)' examples/indata.log
-1 ['Banana 150', 'Banana', 150]
-2 ['Apple 10', 'Apple', 10]
-3 ['Citrus 200', 'Citrus', 200]
-4 ['Blueberries 30', 'Blueberries', 30]
-5 ['Strawberries 30', 'Strawberries', 30]
+$ pawk -t 'print(NR, F[0])' examples/indata.log
+1 Banana 150
+2 Apple 10
+3 Citrus 200
+4 Blueberries 30
+5 Strawberries 30
 ```
 
 * Calculate the sum of a specific column:
