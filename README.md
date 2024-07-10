@@ -1,10 +1,14 @@
 Process textfiles in an awk-like manner, but with python syntax.
 
 Supported variables:
-* `BEGIN` (True on first record in file)
-* `END` (True on last entry in file)
-* `NR` (current record number)
+* `BEGIN` (True on first record in first file)
+* `END` (True on last record in last file)
+* `FNR` (current record number in current file, restarts at 1 for each file)
+* `NR` (current record number, total running number)
 * `F` (the fields of current record)
+
+Keywords:
+* `NEXT` is used to skip to next line (matches `next` in awk)
 
 # Fruit examples
 These examples operate on `examples/fruit_prices.txt` with this content:
@@ -66,6 +70,6 @@ if END: print(f"Total: {total}")
 
 To calculate the total cost per person:
 ```console
-$ pawk -f examples/total_order_cost.py  examples/fruit_prices.txt  examples/fruit_orders.txt
+$ pawk -f examples/total_order_cost.py examples/fruit_prices.txt examples/fruit_orders.txt
 Total: {'David': 300, 'Monica': 600}
 ```

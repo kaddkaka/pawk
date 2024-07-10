@@ -43,7 +43,7 @@ for file_no, _file in enumerate(args.file):
         try:
             exec(program, {}, _locals)  # pylint: disable=exec-used
         except NameError as e:
-            if "name 'NEXT' is not defined" in str(e):
+            if str(e) == "name 'NEXT' is not defined":
                 pass
             else:
                 raise
