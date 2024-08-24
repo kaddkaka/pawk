@@ -5,7 +5,7 @@ import pytest
 shell_test_params = [
     (["pawk -t 'print(F[1])' <(echo a b c)"], "a"),
     (["pawk -t 'print(F[-1])' <(echo a b c)"], "c"),
-    #(["echo x y z | pawk -t 'print(F[1:3])' -"], ""),
+    (["echo x y z | pawk -t 'print(F[-2])' -"], "y"),
 ]
 @pytest.mark.parametrize(["cmd", "expected_output"], shell_test_params)
 def test_shell_tests(cmd, expected_output):
