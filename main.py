@@ -2,6 +2,7 @@
 
 """ pawk - awk-like python tool"""
 
+import fileinput
 from argparse import ArgumentParser
 from typing import Any
 
@@ -25,10 +26,11 @@ def intify(word):
 
 _locals: dict[Any, Any] = {"BEGIN": True, "NR": 1}
 
-for file_no, _file in enumerate(args.file):
+for file_no, file_ in enumerate(args.file):
     last_file = file_no == len(args.file) - 1
-    with open(_file, encoding="utf8") as infile:
-        lines = infile.read().splitlines()
+    with fileinput.input(file_, encoding="utf8") as infile:
+        lines = list(l.rstrip() for l in infile)
+
 
     for line_no, line in enumerate(lines):
         last_line = line_no == len(lines) - 1
