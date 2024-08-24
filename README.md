@@ -1,5 +1,11 @@
 Process textfiles in an awk-like manner, but with python syntax.
 
+Example:
+```console
+$ echo x y z | pawk -t 'print(F[-2])' -
+y
+```
+
 Supported variables:
 * `BEGIN` (True on first record in first file)
 * `END` (True on last record in last file)
