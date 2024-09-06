@@ -17,6 +17,14 @@ Supported variables:
 Keywords:
 * `NEXT` is used to skip to next line (matches `next` in awk)
 
+# Differences from awk
+## BEGIN and END
+BEGIN and END statements are performe when processing the first and last record
+respectively. They to *NOT* occur before or after processing records. This is to
+avoid surprises and technical difficulties of running the pawk script with a
+record loaded. Therefore, you might want to specify BEGIN clauses in the
+beginning of your program and END clauses at the end of your program.
+
 # Fruit examples
 These examples operate on `examples/fruit_prices.txt` with this content:
 ```
