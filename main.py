@@ -14,9 +14,11 @@ program_group.add_argument("-f", "--program-file")
 parser.add_argument("file", nargs="+")
 args = parser.parse_args()
 
-if (program := args.program_text) is None:
+if (program_src := args.program_text) is None:
     with open(args.program_file, encoding="utf8") as program_file:
-        program = program_file.read()
+        program_src = program_file.read()
+program = compile(program_src, args.program_file or "<string>", 'exec')
+
 
 def intify(word):
     try:
