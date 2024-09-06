@@ -12,6 +12,7 @@ Supported variables:
 * `FNR` (current record number in current file, restarts at 1 for each file)
 * `NR` (current record number, total running number)
 * `F` (the fields of current record)
+* `NF` (number of fields of current record)
 
 Keywords:
 * `NEXT` is used to skip to next line (matches `next` in awk)

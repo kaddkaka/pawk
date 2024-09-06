@@ -31,7 +31,6 @@ for file_no, file_ in enumerate(args.file):
     with fileinput.input(file_, encoding="utf8") as infile:
         lines = list(l.rstrip() for l in infile)
 
-
     for line_no, line in enumerate(lines):
         last_line = line_no == len(lines) - 1
         _locals["END"] = last_file and last_line
@@ -40,6 +39,7 @@ for file_no, file_ in enumerate(args.file):
         # Full line as f[0] and the rest of columns start from f[1]
         f = [line, *(intify(w) for w in line.split())]
         _locals["F"] = f
+        _locals["NF"] = len(f)
 
         # Poor mans way of implementing "keywords" by catching NameError
         try:
