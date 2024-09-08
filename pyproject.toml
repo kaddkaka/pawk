@@ -1,0 +1,7 @@
+[project]
+name = "pawk"
+version = "0.1.0"
+description = "awk-like python tool"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = []
