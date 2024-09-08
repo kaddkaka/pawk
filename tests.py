@@ -1,5 +1,6 @@
 import subprocess
 import pytest
+from main import do_the_stuff
 
 
 shell_test_params = [
@@ -32,3 +33,8 @@ def test_pawk(cmd, expected_output):
     result = subprocess.run(cmd, check=True, capture_output=True, text=True)
     assert result.stderr == ""
     assert result.stdout.strip() == expected_output
+
+
+def test_unit_test() -> None:
+    res = do_the_stuff("if NR == 1: NEXT\nS+=F[1]", [(["2", "3", "4"], True)], {"S": 0})
+    assert res["S"] == 7

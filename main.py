@@ -66,13 +66,23 @@ def process_file(program, lines, last_file, _locals):
         _locals["NR"]    += 1
 
 
+def do_the_stuff(program, files_content, start_vars: dict = None):
+    """Do the stuff"""
+    _locals: dict[Any, Any] = {"BEGIN": True, "NR": 1}
+    if start_vars is not None:
+        _locals.update(start_vars)
+    for lines, last_file in files_content:
+        process_file(program, lines, last_file, _locals)
+    return _locals
+
+
 def main() -> None:
     """Main"""
     args = parse_args()
     program = compile_program(args)
-    _locals: dict[Any, Any] = {"BEGIN": True, "NR": 1}
-    for lines, last_file in iterate_files(args.file):
-        process_file(program, lines, last_file, _locals)
+    files = iterate_files(args.file)
+    start_vars = {}
+    do_the_stuff(program, files, start_vars)
 
 
 if __name__ == "__main__":
