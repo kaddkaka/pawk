@@ -4,7 +4,8 @@
 
 import fileinput
 from argparse import ArgumentParser
-from typing import Any
+from typing import Any, Optional
+from util import detect_last, intify
 
 def parse_args():
     parser = ArgumentParser(prog='Pawk', description='awk-like python tool')
@@ -14,14 +15,6 @@ def parse_args():
     program_group.add_argument("-f", "--program-file")
     parser.add_argument("file", nargs="+")
     return parser.parse_args()
-
-
-def intify(word):
-    """Try to parse as numbers if possible"""
-    try:
-        return int(word)
-    except ValueError:
-        return word
 
 
 def compile_program(args):
@@ -34,11 +27,10 @@ def compile_program(args):
 
 def iterate_files(files):
     """Iterate over all input files, also supports '-' for STDIN"""
-    for file_no, file_ in enumerate(files):
-        last_file = file_no == len(files) - 1
+    for file_ in files:
         with fileinput.input(file_, encoding="utf8") as infile:
             lines = list(l.rstrip() for l in infile)
-        yield lines, last_file
+        yield lines
 
 
 def process_file(program, lines, last_file, _locals):
@@ -66,12 +58,12 @@ def process_file(program, lines, last_file, _locals):
         _locals["NR"]    += 1
 
 
-def do_the_stuff(program, files_content, start_vars: dict = None):
+def do_the_stuff(program, files_content, start_vars: Optional[dict] = None):
     """Do the stuff"""
     _locals: dict[Any, Any] = {"BEGIN": True, "NR": 1}
     if start_vars is not None:
         _locals.update(start_vars)
-    for lines, last_file in files_content:
+    for lines, last_file in detect_last(files_content):
         process_file(program, lines, last_file, _locals)
     return _locals
 
@@ -81,7 +73,7 @@ def main() -> None:
     args = parse_args()
     program = compile_program(args)
     files = iterate_files(args.file)
-    start_vars = {}
+    start_vars: dict = {}
     do_the_stuff(program, files, start_vars)
 
 
