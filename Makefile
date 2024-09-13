@@ -1,4 +1,7 @@
 test:
 	pytest --doctest-modules main.py tests.py util.py
 
-.PHONY: test
+install:
+	uv tool install .
+
+.PHONY: test install
