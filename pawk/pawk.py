@@ -5,7 +5,7 @@
 import fileinput
 from argparse import ArgumentParser
 from typing import Any, Optional
-from util import detect_last, intify
+from .util import detect_last, intify
 
 def parse_args():
     parser = ArgumentParser(prog='Pawk', description='awk-like python tool')
@@ -77,5 +77,4 @@ def main() -> None:
     do_the_stuff(program, files, start_vars)
 
 
-if __name__ == "__main__":
-    main()
+

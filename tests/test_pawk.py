@@ -1,6 +1,6 @@
 import subprocess
 import pytest
-from main import do_the_stuff
+from pawk import do_the_stuff
 
 
 shell_test_params = [
