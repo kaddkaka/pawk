@@ -1,5 +1,5 @@
 [project]
-name = "pawk"
+name = "prawk"
 version = "0.1.0"
 description = "awk-like python tool"
 readme = "README.md"
@@ -11,4 +11,4 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project.scripts]
-pawk = "pawk.pawk:main"
+prawk = "prawk.prawk:main"

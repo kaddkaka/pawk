@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-""" pawk - awk-like python tool"""
+""" prawk - awk-like python tool"""
 
 import fileinput
 from argparse import ArgumentParser
@@ -8,7 +8,7 @@ from typing import Any, Optional
 from .util import detect_last, intify
 
 def parse_args():
-    parser = ArgumentParser(prog='Pawk', description='awk-like python tool')
+    parser = ArgumentParser(prog='prawk', description='awk-like python tool')
 
     program_group = parser.add_mutually_exclusive_group(required=True)
     program_group.add_argument("-t", "--program-text")

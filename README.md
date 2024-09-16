@@ -2,7 +2,7 @@ Process textfiles in an awk-like manner, but with python syntax.
 
 Example:
 ```console
-$ echo x y z | pawk -t 'print(F[-2])' -
+$ echo x y z | prawk -t 'print(F[-2])' -
 y
 ```
 
@@ -21,7 +21,7 @@ Keywords:
 ## BEGIN and END
 BEGIN and END statements are performe when processing the first and last record
 respectively. They to *NOT* occur before or after processing records. This is to
-avoid surprises and technical difficulties of running the pawk script with a
+avoid surprises and technical difficulties of running the prawk script with a
 record loaded. Therefore, you might want to specify BEGIN clauses in the
 beginning of your program and END clauses at the end of your program.
 
@@ -37,7 +37,7 @@ Strawberries 30
 
 * Add a running line number to each line:
 ```console
-$ pawk -t 'print(NR, F[0])' examples/fruit_prices.txt
+$ prawk -t 'print(NR, F[0])' examples/fruit_prices.txt
 1 Banana 150
 2 Apple 10
 3 Citrus 200
@@ -54,9 +54,9 @@ s+=F[2]
 if END: print(f"Total: {s}")
 ```
 
-Supply the above script to pawk:
+Supply the above script to prawk:
 ```console
-$ pawk -f examples/total_sum.py examples/fruit_prices.txt
+$ prawk -f examples/total_sum.py examples/fruit_prices.txt
 Total: 420
 ```
 
@@ -85,6 +85,6 @@ if END: print(f"Total: {total}")
 
 To calculate the total cost per person:
 ```console
-$ pawk -f examples/total_order_cost.py examples/fruit_prices.txt examples/fruit_orders.txt
+$ prawk -f examples/total_order_cost.py examples/fruit_prices.txt examples/fruit_orders.txt
 Total: {'David': 300, 'Monica': 600}
 ```

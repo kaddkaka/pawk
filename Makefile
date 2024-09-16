@@ -1,5 +1,5 @@
 test:
-	pytest tests --doctest-modules pawk 
+	pytest tests --doctest-modules prawk
 
 install:
 	uv tool install .

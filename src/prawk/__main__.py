@@ -1,4 +1,4 @@
-from .pawk import main
+from .prawk import main
 
 if __name__ == "__main__":
     main()
